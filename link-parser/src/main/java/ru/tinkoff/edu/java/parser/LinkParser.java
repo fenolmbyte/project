@@ -1,3 +1,5 @@
+package ru.tinkoff.edu.java.parser;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 

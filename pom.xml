@@ -20,6 +20,7 @@
         <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
         <spring-boot.version>3.0.1</spring-boot.version>
+        <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
