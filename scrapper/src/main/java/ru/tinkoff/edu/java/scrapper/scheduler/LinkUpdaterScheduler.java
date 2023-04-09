@@ -11,5 +11,4 @@ public class LinkUpdaterScheduler {
     public void update() {
         log.info("Update!");
     }
-
 }
