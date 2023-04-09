@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tg-chat")
 @RestController
 public class TelegramChatController {
-
     @PostMapping(
             path = "/{id}"
     )
@@ -18,9 +17,7 @@ public class TelegramChatController {
     @DeleteMapping(
             path = "/{id}"
     )
-
     public void delete(@PathVariable("id") Long id) {
         // TODO: implement
     }
-
 }

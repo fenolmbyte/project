@@ -1,0 +1,15 @@
+springdoc:
+  swagger-ui:
+    path: "swagger-ui"
+
+management:
+  server:
+    port: 8080
+
+app:
+  test: 123
+  bot:
+    name: "Tinkoff-Bot"
+    token: 6100537283:AAENOU6Bg1F23isZpjIRBNq-p1VtRXo9cNY
+  scrapper:
+    url: "localhost"
