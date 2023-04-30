@@ -8,13 +8,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.validation.annotation.Validated;
 import org.telegram.telegrambots.starter.TelegramBotStarterConfiguration;
+import ru.tinkoff.edu.java.parser.ParserConfig;
 
 @Validated
 @Data
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @Configuration
 @Import({
-        TelegramBotStarterConfiguration.class
+        TelegramBotStarterConfiguration.class,
+        ParserConfig.class
 })
 public class ApplicationConfig {
     @NotNull

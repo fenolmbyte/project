@@ -10,8 +10,6 @@ import ru.tinkoff.edu.java.parser.data.LinkData;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Order(1)
-@Component
 public final class GitHubLinkHandler implements LinkHandler {
     private final Pattern pattern = Pattern.compile(
             "^https://github\\.com/([^/]+)/([^/]+)/?$"

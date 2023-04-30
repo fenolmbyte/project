@@ -11,6 +11,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.tinkoff.edu.java.bot.config.ApplicationConfig;
+import ru.tinkoff.edu.java.bot.dto.controller.LinkUpdateRequest;
+import ru.tinkoff.edu.java.bot.exception.SendingMessageException;
 import ru.tinkoff.edu.java.bot.telegram.command.AbstractPublicCommand;
 
 import java.util.List;
@@ -60,5 +62,21 @@ public class TrackerBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return config.getBot().getName();
+    }
+
+    public void sendUpdates(LinkUpdateRequest updates) {
+        String message = "New updates from: " + updates.url() + "\n" + updates.description();
+        updates.tgChatsIds().forEach(id -> sendMessage(id, message));
+    }
+
+    private void sendMessage(Long chatId, String text) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(text);
+        try {
+            this.execute(sendMessage);
+        } catch (TelegramApiException e) {
+            throw new SendingMessageException(chatId, e);
+        }
     }
 }
