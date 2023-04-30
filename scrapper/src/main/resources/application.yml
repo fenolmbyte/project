@@ -7,10 +7,21 @@ management:
     port: 8080
 
 app:
-  test: 123
   scheduler:
     interval: 10000
+    link-to-be-checked-interval: 90000
   github:
     url: "https://api.github.com"
   stackoverflow:
     url: "https://api.stackexchange.com/2.3"
+  bot:
+    url: "http://localhost:8083"
+
+spring:
+  datasource:
+    url: ${DB_URL}
+    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME}
+
+  codec:
+    max-in-memory-size: 2MB

@@ -5,15 +5,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 import reactor.core.publisher.Mono;
-import ru.tinkoff.edu.java.scrapper.dto.github.GitHubRepositoryResponse;
+import ru.tinkoff.edu.java.scrapper.dto.client.GitHubEventResponse;
+
+import java.util.List;
 
 @HttpExchange(
         accept = MediaType.APPLICATION_JSON_VALUE,
         contentType = MediaType.APPLICATION_JSON_VALUE
 )
 public interface GitHubWebClient {
-    @GetExchange("/repos/{owner}/{repo}")
-    Mono<GitHubRepositoryResponse> fetchRepo(
+    @GetExchange("/repos/{owner}/{repo}/events")
+    Mono<List<GitHubEventResponse>> fetchEvents(
             @PathVariable("owner") String owner,
             @PathVariable("repo") String repo
     );

@@ -10,8 +10,6 @@ import ru.tinkoff.edu.java.parser.data.StackOverflowLinkData;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Order(2)
-@Component
 public final class StackOverflowLinkHandler implements LinkHandler {
     private final Pattern pattern = Pattern.compile(
             "^https://stackoverflow\\.com/questions/(\\d+)/[^/]+/?$"
