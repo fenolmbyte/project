@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.client;
+package ru.tinkoff.edu.java.scrapper.service.stackoverflow;
 
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;

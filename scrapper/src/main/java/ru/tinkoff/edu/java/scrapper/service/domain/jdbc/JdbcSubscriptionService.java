@@ -1,25 +1,22 @@
-package ru.tinkoff.edu.java.scrapper.service.jdbc;
+package ru.tinkoff.edu.java.scrapper.service.domain.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.dto.entity.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
-import ru.tinkoff.edu.java.scrapper.repository.JdbcChatRepository;
-import ru.tinkoff.edu.java.scrapper.repository.JdbcLinkRepository;
-import ru.tinkoff.edu.java.scrapper.repository.JdbcSubscriptionRepository;
-import ru.tinkoff.edu.java.scrapper.service.api.SubscriptionService;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
+import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
+import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
 
 import java.net.URI;
 import java.util.List;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class JdbcSubscriptionService implements SubscriptionService {
     private final JdbcSubscriptionRepository subscriptionRepository;
     private final JdbcLinkRepository linkRepository;
@@ -62,11 +59,13 @@ public class JdbcSubscriptionService implements SubscriptionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<LinkEntity> getChatSubscriptions(Long chatId) {
         return linkRepository.findWithSubscriber(chatId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ChatEntity> getLinkSubscribers(Long linkId) {
         return chatRepository.findAllSubscribers(linkId);
     }

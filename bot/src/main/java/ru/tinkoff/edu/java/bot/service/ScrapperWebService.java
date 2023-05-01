@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.bot.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.bot.client.ScrapperWebClient;
 import ru.tinkoff.edu.java.bot.dto.scrapper.AddLinkRequest;
@@ -8,12 +9,14 @@ import ru.tinkoff.edu.java.bot.dto.scrapper.LinkResponse;
 import ru.tinkoff.edu.java.bot.dto.scrapper.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.dto.scrapper.RemoveLinkRequest;
 
-@RequiredArgsConstructor
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class ScrapperWebService {
     private final ScrapperWebClient client;
 
     public void createChat(Long id) {
+        // TODO: handle double chat creation
         client.createChat(id);
     }
 
@@ -22,6 +25,7 @@ public class ScrapperWebService {
     }
 
     public LinkResponse createLink(Long id, String link) {
+        // TODO: handle double link tracking
         return client.createLink(id, new AddLinkRequest(link));
     }
 
