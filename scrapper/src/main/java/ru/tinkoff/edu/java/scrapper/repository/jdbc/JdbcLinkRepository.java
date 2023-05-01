@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.repository;
+package ru.tinkoff.edu.java.scrapper.repository.jdbc;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,10 @@ public class JdbcLinkRepository {
     private final static String REMOVE_BY_ID_QUERY = "delete from link where id = ?";
     private final static String REMOVE_WITH_ZERO_SUBSCRIBERS_QUERY = """
             delete from link 
-            where (select count(link_id) from subscription where link_id = link.id) = 0
+            where link.id in 
+            (select id from link 
+            left outer join subscription s on link.id = s.link_id 
+            where s.chat_id is NULL)
             """;
 
     public Long add(String url) throws DuplicateKeyException {

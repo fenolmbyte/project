@@ -14,11 +14,11 @@ import ru.tinkoff.edu.java.scrapper.dto.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.dto.client.UpdatesInfo;
 import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
 import ru.tinkoff.edu.java.scrapper.exception.InternalError;
-import ru.tinkoff.edu.java.scrapper.service.api.LinkService;
-import ru.tinkoff.edu.java.scrapper.service.api.SubscriptionService;
-import ru.tinkoff.edu.java.scrapper.service.client.BotWebService;
-import ru.tinkoff.edu.java.scrapper.service.client.GitHubWebService;
-import ru.tinkoff.edu.java.scrapper.service.client.StackOverflowWebService;
+import ru.tinkoff.edu.java.scrapper.service.bot.BotWebService;
+import ru.tinkoff.edu.java.scrapper.service.github.GitHubWebService;
+import ru.tinkoff.edu.java.scrapper.service.stackoverflow.StackOverflowWebService;
+import ru.tinkoff.edu.java.scrapper.service.domain.api.LinkService;
+import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
 
 import java.util.List;
 

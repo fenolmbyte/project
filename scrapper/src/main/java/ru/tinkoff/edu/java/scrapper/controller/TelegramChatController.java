@@ -3,7 +3,7 @@ package ru.tinkoff.edu.java.scrapper.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.tinkoff.edu.java.scrapper.service.api.ChatService;
+import ru.tinkoff.edu.java.scrapper.service.domain.api.ChatService;
 
 @Validated
 @RequestMapping("/tg-chat")

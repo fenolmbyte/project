@@ -17,6 +17,7 @@ import ru.tinkoff.edu.java.scrapper.client.StackOverflowWebClient;
 @Configuration
 public class WebClientConfig {
     private final ExchangeStrategies exchangeStrategies;
+    private static final Integer MAX_BUFF_SIZE = 1024 * 1024 * 10;
 
     public WebClientConfig(ObjectMapper objectMapper) {
         exchangeStrategies = ExchangeStrategies
@@ -28,6 +29,7 @@ public class WebClientConfig {
                     clientDefaultCodecsConfigurer
                             .defaultCodecs()
                             .jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
+                    clientDefaultCodecsConfigurer.defaultCodecs().maxInMemorySize(MAX_BUFF_SIZE);
                 }).build();
     }
 

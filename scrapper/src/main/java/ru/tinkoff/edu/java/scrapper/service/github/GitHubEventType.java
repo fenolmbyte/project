@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.client;
+package ru.tinkoff.edu.java.scrapper.service.github;
 
 public enum GitHubEventType {
     CommitCommentEvent("Commit was committed"),

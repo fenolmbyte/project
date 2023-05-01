@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.client;
+package ru.tinkoff.edu.java.scrapper.service.bot;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package ru.tinkoff.edu.java.scrapper.service.api;
+package ru.tinkoff.edu.java.scrapper.service.domain.api;
 
 import ru.tinkoff.edu.java.scrapper.dto.entity.ChatEntity;
 import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
