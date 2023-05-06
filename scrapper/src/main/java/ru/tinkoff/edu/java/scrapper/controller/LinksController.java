@@ -8,7 +8,7 @@ import ru.tinkoff.edu.java.scrapper.dto.controller.AddLinkRequest;
 import ru.tinkoff.edu.java.scrapper.dto.controller.LinkResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.ListLinksResponse;
 import ru.tinkoff.edu.java.scrapper.dto.controller.RemoveLinkRequest;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
 
 import java.net.URI;
@@ -28,8 +28,8 @@ public class LinksController {
     )
     public LinkResponse create(@PathVariable("id") Long id,
                                @RequestBody AddLinkRequest request) {
-        LinkEntity linkEntity = subscriptionService.subscribe(id, URI.create(request.link()));
-        return new LinkResponse(linkEntity.getId(), URI.create(linkEntity.getUrl()));
+        Link link = subscriptionService.subscribe(id, URI.create(request.link()));
+        return new LinkResponse(link.getId(), URI.create(link.getUrl()));
     }
 
     @GetMapping(
@@ -51,7 +51,7 @@ public class LinksController {
     )
     public LinkResponse delete(@PathVariable("id") Long id,
                                @RequestBody RemoveLinkRequest request) {
-        LinkEntity linkEntity = subscriptionService.unsubscribe(id, URI.create(request.link()));
-        return new LinkResponse(linkEntity.getId(), URI.create(linkEntity.getUrl()));
+        Link link = subscriptionService.unsubscribe(id, URI.create(request.link()));
+        return new LinkResponse(link.getId(), URI.create(link.getUrl()));
     }
 }

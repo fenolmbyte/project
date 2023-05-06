@@ -5,8 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.entity.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Chat;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
@@ -24,11 +24,11 @@ public class JdbcSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity subscribe(Long chatId, URI url) {
+    public Link subscribe(Long chatId, URI url) {
         try {
-            LinkEntity linkEntity = linkRepository.find(url.toString());
-            subscriptionRepository.add(chatId, linkEntity.getId());
-            return linkEntity;
+            Link link = linkRepository.find(url.toString());
+            subscriptionRepository.add(chatId, link.getId());
+            return link;
         } catch (EmptyResultDataAccessException ignored) {
             Long linkId = linkRepository.add(url.toString());
             try {
@@ -43,15 +43,15 @@ public class JdbcSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity unsubscribe(Long chatId, URI url) {
+    public Link unsubscribe(Long chatId, URI url) {
         try {
-            LinkEntity linkEntity = linkRepository.find(url.toString());
-            subscriptionRepository.remove(chatId, linkEntity.getId());
-            Integer subscriptions = subscriptionRepository.countSubscriptions(linkEntity.getId());
-            if (subscriptions == 0) {
-                linkRepository.removeById(linkEntity.getId());
+            Link link = linkRepository.find(url.toString());
+            subscriptionRepository.remove(chatId, link.getId());
+            Integer subscriptionsCount = subscriptionRepository.countSubscriptions(link.getId());
+            if (subscriptionsCount == 0) {
+                linkRepository.removeById(link.getId());
             }
-            return linkEntity;
+            return link;
         } catch (EmptyResultDataAccessException e) {
             log.error(e.getMessage());
             throw new IllegalArgumentException("Link not found", e);
@@ -60,13 +60,13 @@ public class JdbcSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LinkEntity> getChatSubscriptions(Long chatId) {
+    public List<Link> getChatSubscriptions(Long chatId) {
         return linkRepository.findWithSubscriber(chatId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ChatEntity> getLinkSubscribers(Long linkId) {
+    public List<Chat> getLinkSubscribers(Long linkId) {
         return chatRepository.findAllSubscribers(linkId);
     }
 }

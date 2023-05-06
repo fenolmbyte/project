@@ -1,7 +1,6 @@
 package ru.tinkoff.edu.java.bot.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -13,13 +12,12 @@ import org.springframework.web.reactive.function.client.support.WebClientAdapter
 import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 import ru.tinkoff.edu.java.bot.client.ScrapperWebClient;
 
-@RequiredArgsConstructor
 @Configuration
 public class WebClientConfig {
-    private final ObjectMapper objectMapper;
+    private final ExchangeStrategies exchangeStrategies;
 
-    private WebClient buildWebClient(String url) {
-        ExchangeStrategies strategies = ExchangeStrategies
+    public WebClientConfig(ObjectMapper objectMapper) {
+        exchangeStrategies = ExchangeStrategies
                 .builder()
                 .codecs(clientDefaultCodecsConfigurer -> {
                     clientDefaultCodecsConfigurer
@@ -29,18 +27,21 @@ public class WebClientConfig {
                             .defaultCodecs()
                             .jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
                 }).build();
-        return WebClient.builder()
-                .exchangeStrategies(strategies)
-                .baseUrl(url)
-                .build();
     }
 
     @Bean
     public ScrapperWebClient gitHubWebClient(ApplicationConfig config) {
-        WebClient webClient = buildWebClient(config.getScrapper().getUrl());
+        return buildWebClient(config.getScrapper().getUrl(), ScrapperWebClient.class);
+    }
+
+    private <T> T buildWebClient(String baseUrl, Class<T> client) {
+        WebClient webClient = WebClient.builder()
+                .exchangeStrategies(exchangeStrategies)
+                .baseUrl(baseUrl)
+                .build();
         HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
                 .builder(WebClientAdapter.forClient(webClient))
                 .build();
-        return httpServiceProxyFactory.createClient(ScrapperWebClient.class);
+        return httpServiceProxyFactory.createClient(client);
     }
 }

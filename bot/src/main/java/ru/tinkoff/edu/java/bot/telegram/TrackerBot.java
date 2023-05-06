@@ -50,7 +50,14 @@ public class TrackerBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             Message message = update.getMessage();
-            SendMessage sendMessage = messageHandler.handle(message);
+            SendMessage sendMessage;
+            try {
+                sendMessage = messageHandler.handle(message);
+            } catch (RuntimeException ex) {
+                log.error(ex.toString());
+                sendMessage = new SendMessage(message.getChatId().toString(),
+                        "Sorry, internal error happened");
+            }
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {

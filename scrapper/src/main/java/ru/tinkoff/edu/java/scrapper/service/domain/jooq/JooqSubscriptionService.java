@@ -3,10 +3,9 @@ package ru.tinkoff.edu.java.scrapper.service.domain.jooq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.exception.DataAccessException;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.tinkoff.edu.java.scrapper.dto.entity.ChatEntity;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Chat;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
@@ -16,7 +15,6 @@ import java.net.URI;
 import java.util.List;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
 public class JooqSubscriptionService implements SubscriptionService {
     private final JooqLinkRepository linkRepository;
@@ -25,7 +23,7 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity subscribe(Long chatId, URI url) {
+    public Link subscribe(Long chatId, URI url) {
         try {
             return linkRepository.subscribe(url.toString(), chatId);
         } catch (DataAccessException e) {
@@ -36,15 +34,15 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional
-    public LinkEntity unsubscribe(Long chatId, URI url) {
-        LinkEntity linkEntity = linkRepository.find(url.toString());
-        if (linkEntity != null) {
-            subscriptionRepository.remove(chatId, linkEntity.getId());
-            Integer subscriptions = subscriptionRepository.countSubscriptions(linkEntity.getId());
+    public Link unsubscribe(Long chatId, URI url) {
+        Link link = linkRepository.find(url.toString());
+        if (link != null) {
+            subscriptionRepository.remove(chatId, link.getId());
+            Integer subscriptions = subscriptionRepository.countSubscriptions(link.getId());
             if (subscriptions == 0) {
-                linkRepository.removeById(linkEntity.getId());
+                linkRepository.removeById(link.getId());
             }
-            return linkEntity;
+            return link;
         } else {
             log.error("Link not found");
             throw new IllegalArgumentException("Link not found");
@@ -53,13 +51,13 @@ public class JooqSubscriptionService implements SubscriptionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LinkEntity> getChatSubscriptions(Long chatId) {
+    public List<Link> getChatSubscriptions(Long chatId) {
         return linkRepository.findWithChatSubscription(chatId);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ChatEntity> getLinkSubscribers(Long linkId) {
+    public List<Chat> getLinkSubscribers(Long linkId) {
         return chatRepository.findAllSubscribers(linkId);
     }
 }

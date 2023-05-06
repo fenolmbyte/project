@@ -3,8 +3,7 @@ package ru.tinkoff.edu.java.scrapper.repository.jooq;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription;
-import ru.tinkoff.edu.java.scrapper.dto.entity.SubscriptionEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Subscription;
 
 import java.util.List;
 
@@ -12,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JooqSubscriptionRepository {
     private final DSLContext context;
-    private final Subscription subscription = Subscription.SUBSCRIPTION;
+    private final ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription subscription = ru.tinkoff.edu.java.scrapper.domain.jooq.tables.Subscription.SUBSCRIPTION;
 
     public void add(Long chatId, Long linkId) {
         context.insertInto(subscription)
@@ -21,10 +20,10 @@ public class JooqSubscriptionRepository {
                 .execute();
     }
 
-    public List<SubscriptionEntity> findAll() {
+    public List<Subscription> findAll() {
         return context.select(subscription.fields())
                 .from(subscription)
-                .fetchInto(SubscriptionEntity.class);
+                .fetchInto(Subscription.class);
     }
 
     public void remove(Long chatId, Long linkId) {

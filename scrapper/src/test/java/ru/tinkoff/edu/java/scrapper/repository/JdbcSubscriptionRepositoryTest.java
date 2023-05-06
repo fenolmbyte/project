@@ -11,7 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.dto.entity.SubscriptionEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Subscription;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 
 import java.sql.PreparedStatement;
@@ -71,7 +71,7 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
 
         // when
         int querySize = getAll().size();
-        List<SubscriptionEntity> all = subscriptionRepository.findAll();
+        List<Subscription> all = subscriptionRepository.findAll();
 
         // then
         assertEquals(all.size(), 0);
@@ -91,7 +91,7 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
 
         // when
         int querySize = getAll().size();
-        List<SubscriptionEntity> all = subscriptionRepository.findAll();
+        List<Subscription> all = subscriptionRepository.findAll();
 
         // then
         assertEquals(all.size(), 1);
@@ -172,8 +172,8 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
         assertEquals(counted, 0);
     }
 
-    private List<SubscriptionEntity> getAll() {
-        return template.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(SubscriptionEntity.class));
+    private List<Subscription> getAll() {
+        return template.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(Subscription.class));
     }
 
     private Long createLink(String url) {

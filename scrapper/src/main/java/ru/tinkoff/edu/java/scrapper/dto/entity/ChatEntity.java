@@ -1,12 +1,30 @@
 package ru.tinkoff.edu.java.scrapper.dto.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.List;
+
+@Entity
+@Table(name = "chat")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ChatEntity {
+    @Id
     private Long id;
+
+    @ManyToMany
+    @JoinTable(
+            name = "subscription",
+            joinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "link_id", referencedColumnName = "id")
+    )
+    private List<LinkEntity> subscriptions;
+
+    public ChatEntity(Long id) {
+        this.id = id;
+    }
 }

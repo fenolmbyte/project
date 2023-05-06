@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.dto.entity.ChatEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Chat;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
 
 import java.util.List;
@@ -34,12 +34,12 @@ class JdbcChatRepositoryTest extends IntegrationEnvironment {
 
         // when
         int added = chatRepository.add(id);
-        List<ChatEntity> all = findAll();
+        List<Chat> all = findAll();
 
         // then
         assertEquals(added, 1);
         assertEquals(all.size(), 1);
-        assertEquals(all.get(0), new ChatEntity(id));
+        assertEquals(all.get(0), new Chat(id));
     }
 
     @Test
@@ -67,7 +67,7 @@ class JdbcChatRepositoryTest extends IntegrationEnvironment {
 
         // when
         int removed = chatRepository.removeById(id);
-        List<ChatEntity> all = findAll();
+        List<Chat> all = findAll();
 
         // then
         assertEquals(all.size(), 0);
@@ -95,7 +95,7 @@ class JdbcChatRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<ChatEntity> all = chatRepository.findAll();
+        List<Chat> all = chatRepository.findAll();
 
         // then
         assertEquals(all.size(), 0);
@@ -110,14 +110,14 @@ class JdbcChatRepositoryTest extends IntegrationEnvironment {
         create(id);
 
         // when
-        List<ChatEntity> all = chatRepository.findAll();
+        List<Chat> all = chatRepository.findAll();
 
         // then
         assertEquals(all.size(), 1);
     }
 
-    private List<ChatEntity> findAll() {
-        return template.query("select id from chat", new BeanPropertyRowMapper<>(ChatEntity.class));
+    private List<Chat> findAll() {
+        return template.query("select id from chat", new BeanPropertyRowMapper<>(Chat.class));
     }
 
     private void create(Long id) {

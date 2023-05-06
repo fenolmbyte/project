@@ -8,19 +8,17 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 
 import java.sql.PreparedStatement;
 import java.time.OffsetDateTime;
 import java.util.List;
 
 @Slf4j
-@Repository
 @RequiredArgsConstructor
 public class JdbcLinkRepository {
     private final JdbcTemplate template;
-    private final BeanPropertyRowMapper<LinkEntity> mapper = new BeanPropertyRowMapper<>(LinkEntity.class);
+    private final BeanPropertyRowMapper<Link> mapper = new BeanPropertyRowMapper<>(Link.class);
 
     private final static String ADD_QUERY = "insert into link (url) values (?)";
     private final static String FIND_QUERY = """
@@ -44,7 +42,7 @@ public class JdbcLinkRepository {
             update link
             set last_check_time = now()
             where ? > last_check_time
-            returning id, url, last_check_time, last_update_time;
+            returning id, url, last_check_time, last_update_time
             """;
     private final static String UPDATE_LAST_UPDATE_TIME_QUERY = "update link set last_update_time = ? where id = ?";
     private final static String REMOVE_QUERY = "delete from link where url = ?";
@@ -67,23 +65,23 @@ public class JdbcLinkRepository {
         return keyHolder.getKey().longValue();
     }
 
-    public LinkEntity find(String url) throws EmptyResultDataAccessException {
+    public Link find(String url) throws EmptyResultDataAccessException {
         return template.queryForObject(FIND_QUERY, mapper, url);
     }
 
-    public LinkEntity findById(Long id) throws EmptyResultDataAccessException {
+    public Link findById(Long id) throws EmptyResultDataAccessException {
         return template.queryForObject(FIND_BY_ID_QUERY, mapper, id);
     }
 
-    public List<LinkEntity> findAll() {
+    public List<Link> findAll() {
         return template.query(FIND_ALL_QUERY, mapper);
     }
 
-    public List<LinkEntity> findWithSubscriber(Long chatId) {
+    public List<Link> findWithSubscriber(Long chatId) {
         return template.query(FIND_WITH_SUBSCRIBER_QUERY, mapper, chatId);
     }
 
-    public List<LinkEntity> updateLastCheckedTimeAndGet(OffsetDateTime shouldBeCheckedAfter) {
+    public List<Link> updateLastCheckedTimeAndGet(OffsetDateTime shouldBeCheckedAfter) {
         return template.query(UPDATE_LAST_CHECKED_TIME_AND_GET, mapper, shouldBeCheckedAfter);
     }
 
