@@ -16,7 +16,7 @@ import ru.tinkoff.edu.java.scrapper.service.domain.jooq.JooqSubscriptionService;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jooq")
-public class JooqAccessConfiguration {
+public class JooqAccessConfig {
     @Bean
     public JooqChatRepository chatRepository(DSLContext context) {
         return new JooqChatRepository(context);

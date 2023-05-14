@@ -16,7 +16,7 @@ import ru.tinkoff.edu.java.scrapper.service.domain.jdbc.JdbcSubscriptionService;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jdbc")
-public class JdbcAccessConfiguration {
+public class JdbcAccessConfig {
     @Bean
     public JdbcChatRepository chatRepository(JdbcTemplate template) {
         return new JdbcChatRepository(template);

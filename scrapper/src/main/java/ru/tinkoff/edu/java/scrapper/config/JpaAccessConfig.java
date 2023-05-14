@@ -15,7 +15,7 @@ import ru.tinkoff.edu.java.scrapper.service.domain.jpa.JpaSubscriptionService;
 
 @Configuration
 @ConditionalOnProperty(prefix = "app", name = "database-access-type", havingValue = "jpa")
-public class JpaAccessConfiguration {
+public class JpaAccessConfig {
     @Bean
     public LinkService linkService(JpaLinkRepository linkRepository) {
         return new JpaLinkService(linkRepository);

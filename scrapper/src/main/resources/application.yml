@@ -16,10 +16,20 @@ app:
     url: "https://api.stackexchange.com/2.3"
   bot:
     url: "http://localhost:8083"
-  databaseAccessType: "jpa"
+  databaseAccessType: jpa
+  use-queue: true
+  rabbit-queue:
+    exchange-name: updates
+    queue-name: updates.queue
+    routing-key: upd
 
 spring:
   datasource:
     url: ${DB_URL}
     password: ${DB_PASSWORD}
     username: ${DB_USERNAME}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${QUEUE_USERNAME}
+    password: ${QUEUE_PASSWORD}
