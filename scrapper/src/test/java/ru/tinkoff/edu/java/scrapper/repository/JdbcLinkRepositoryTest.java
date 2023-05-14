@@ -12,7 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 
 import java.sql.PreparedStatement;
@@ -68,10 +68,10 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         Long id = createLink(url);
 
         // when
-        LinkEntity linkEntity = linkRepository.find(url);
+        Link link = linkRepository.find(url);
 
         // then
-        assertEquals(linkEntity.getId(), id);
+        assertEquals(link.getId(), id);
     }
 
     @Test
@@ -96,10 +96,10 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         Long id = createLink(url);
 
         // when
-        LinkEntity linkEntity = linkRepository.findById(id);
+        Link link = linkRepository.findById(id);
 
         // then
-        assertEquals(linkEntity.getId(), id);
+        assertEquals(link.getId(), id);
     }
 
     @Test
@@ -122,7 +122,7 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         // given
 
         // when
-        List<LinkEntity> all = linkRepository.findAll();
+        List<Link> all = linkRepository.findAll();
 
         // then
         assertEquals(all.size(), 0);
@@ -137,7 +137,7 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         createLink(url);
 
         // when
-        List<LinkEntity> all = linkRepository.findAll();
+        List<Link> all = linkRepository.findAll();
 
         // then
         assertEquals(all.size(), 1);
@@ -155,7 +155,7 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         createSubscription(chatId, linkId);
 
         // when
-        List<LinkEntity> linkEntities = linkRepository.findWithSubscriber(chatId);
+        List<Link> linkEntities = linkRepository.findWithSubscriber(chatId);
 
         // then
         assertEquals(linkEntities.size(), 1);
@@ -169,7 +169,7 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         Long chatId = 1L;
 
         // when
-        List<LinkEntity> linkEntities = linkRepository.findWithSubscriber(chatId);
+        List<Link> linkEntities = linkRepository.findWithSubscriber(chatId);
 
         // then
         assertEquals(linkEntities.size(), 0);
@@ -282,8 +282,8 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
         assertEquals(beforeCount, afterCount);
     }
 
-    private List<LinkEntity> getAll() {
-        return template.query("select id, url from link", new BeanPropertyRowMapper<>(LinkEntity.class));
+    private List<Link> getAll() {
+        return template.query("select id, url from link", new BeanPropertyRowMapper<>(Link.class));
     }
 
     private Long createLink(String url) {

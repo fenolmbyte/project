@@ -12,7 +12,7 @@ import ru.tinkoff.edu.java.parser.handler.LinkHandlerChain;
 import ru.tinkoff.edu.java.scrapper.config.ApplicationConfig;
 import ru.tinkoff.edu.java.scrapper.dto.bot.LinkUpdateRequest;
 import ru.tinkoff.edu.java.scrapper.dto.client.UpdatesInfo;
-import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
+import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.exception.InternalError;
 import ru.tinkoff.edu.java.scrapper.service.bot.BotWebService;
 import ru.tinkoff.edu.java.scrapper.service.github.GitHubWebService;
@@ -34,13 +34,27 @@ public class LinkUpdatesService {
     private final StackOverflowWebService stackOverflowWebService;
     private final BotWebService botWebService;
 
-    private List<LinkEntity> getUncheckedLinks() {
+    public void updateLinks() {
+        List<Link> uncheckedLinks = getUncheckedLinks();
+        log.info(uncheckedLinks.stream().map(Link::toString).toList().toString());
+        uncheckedLinks.forEach(link -> {
+            UpdatesInfo updatesInfo = fetchUpdates(link);
+            boolean shouldSendUpdate = updatesInfo != null &&
+                    (link.getLastUpdateTime() == null ||
+                            link.getLastUpdateTime().isBefore(updatesInfo.lastUpdateTime()));
+            if (shouldSendUpdate) {
+                sendUpdates(link, updatesInfo);
+            }
+        });
+    }
+
+    private List<Link> getUncheckedLinks() {
         return linkService.updateLastCheckedTimeAndGet(
                 config.getScheduler().getLinkToBeCheckedInterval()
         );
     }
 
-    private @Nullable UpdatesInfo fetchUpdates(LinkEntity link) {
+    private @Nullable UpdatesInfo fetchUpdates(Link link) {
         LinkData linkData = handlerChain.handle(link.getUrl());
         return switch (linkData) {
             case null -> throw new InternalError("Malicious link");
@@ -50,26 +64,13 @@ public class LinkUpdatesService {
         };
     }
 
-    private void sendUpdates(LinkEntity link, UpdatesInfo updatesInfo) {
-        linkService.updateLink(link, updatesInfo.lastUpdateTime());
+    private void sendUpdates(Link link, UpdatesInfo updatesInfo) {
+        linkService.updateLinkLastUpdateTime(link.getId(), updatesInfo.lastUpdateTime());
         botWebService.sendUpdate(new LinkUpdateRequest(
                 link.getId(),
                 link.getUrl(),
                 Strings.join(updatesInfo.updates(), '\n'),
                 subscriptionService.getChatsIds(link.getId())
         ));
-    }
-
-    public void updateLinks() {
-        getUncheckedLinks().forEach(link -> {
-            UpdatesInfo updatesInfo = fetchUpdates(link);
-
-            boolean shouldSendUpdate = updatesInfo != null &&
-                    (link.getLastUpdateTime() == null ||
-                            link.getLastUpdateTime().isBefore(updatesInfo.lastUpdateTime()));
-            if (shouldSendUpdate) {
-                sendUpdates(link, updatesInfo);
-            }
-        });
     }
 }

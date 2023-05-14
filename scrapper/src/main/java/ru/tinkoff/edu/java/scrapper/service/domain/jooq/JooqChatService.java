@@ -2,14 +2,12 @@ package ru.tinkoff.edu.java.scrapper.service.domain.jooq;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.ChatService;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
 public class JooqChatService implements ChatService {
     private final JooqLinkRepository linkRepository;
