@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.repository.jpa;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,4 +36,7 @@ public interface JpaLinkRepository extends JpaRepository<LinkEntity, Long> {
     List<LinkEntity> updateLastCheckedTimeAndGet(@Param("timeParam") OffsetDateTime shouldBeCheckedAfter);
 
     Optional<LinkEntity> findLinkEntityByUrl(String url);
+
+    @Query("select l from LinkEntity l left join fetch l.subscribers where l.id = :id")
+    Optional<LinkEntity> findById(@Param("id") @NotNull Long id);
 }
