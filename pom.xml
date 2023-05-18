@@ -113,6 +113,18 @@
                         <compilerArgs>--enable-preview</compilerArgs>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>3.2.2</version>
+                    <configuration>
+                        <configLocation>checkstyle.xml</configLocation>
+                        <excludes>**/domain/jooq/**</excludes>
+                    </configuration>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
