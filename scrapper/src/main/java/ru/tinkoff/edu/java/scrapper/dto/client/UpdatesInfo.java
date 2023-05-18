@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record UpdatesInfo(
-        OffsetDateTime lastUpdateTime,
-        List<String> updates
+    OffsetDateTime lastUpdateTime,
+    List<String> updates
 ) {
     public UpdatesInfo(OffsetDateTime lastUpdateTime) {
         this(lastUpdateTime, new ArrayList<>());

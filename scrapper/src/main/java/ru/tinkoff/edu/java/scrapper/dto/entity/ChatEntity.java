@@ -1,11 +1,15 @@
 package ru.tinkoff.edu.java.scrapper.dto.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import java.util.List;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Table(name = "chat")
@@ -18,9 +22,9 @@ public class ChatEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "subscription",
-            joinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "link_id", referencedColumnName = "id")
+        name = "subscription",
+        joinColumns = @JoinColumn(name = "chat_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "link_id", referencedColumnName = "id")
     )
     private List<LinkEntity> subscriptions;
 

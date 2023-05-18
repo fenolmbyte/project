@@ -1,10 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.dto.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.time.OffsetDateTime;
 import java.util.Map;
+import lombok.Data;
 
 @Data
 public class GitHubEventResponse {
