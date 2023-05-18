@@ -14,7 +14,7 @@ import java.util.List;
 @Order(1)
 public class HelpCommand extends AbstractPublicCommand {
     private static final String COMMAND = "/help";
-    private static final String DESCRIPTION = "shows a list of commands";
+    private static final String DESCRIPTION = "список доступных команд";
 
     private final List<String> commandsDescription;
 
@@ -29,7 +29,7 @@ public class HelpCommand extends AbstractPublicCommand {
     @Override
     public SendMessage handle(@NotNull Message message) {
         return new SendMessage(message.getChatId().toString(),
-                "Commands description: \n" + Strings.join(commandsDescription, '\n'));
+                "Описание команды: \n" + Strings.join(commandsDescription, '\n'));
     }
 
     @Override

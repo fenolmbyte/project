@@ -20,9 +20,10 @@ public class ListCommand extends AbstractPublicCommand {
     private final ScrapperWebService webService;
 
     private static final String COMMAND = "/list";
-    private static final String DESCRIPTION = "show a list of tracked links";
+    private static final String DESCRIPTION = "показать список отслеживаемых ссылок";
     private static final String EMPTY_LINKS_LIST_MESSAGE =
-            "You don't have tracked links yet, use /track <link> to track one";
+            "У вас еще нет отслеживаемых ссылок. " +
+                "\nИспользуйте /track <ссылка>, чтобы начать отслеживание своей первой ссылки!";
 
     public ListCommand(ScrapperWebService webService) {
         super(COMMAND, DESCRIPTION);
@@ -48,7 +49,7 @@ public class ListCommand extends AbstractPublicCommand {
                 .map(LinkResponse::link)
                 .map(URI::toString)
                 .toList();
-        return "List of your current tracked links: \n" + links
+        return "Список ссылок, которые вы отслеживате: \n" + links
                 .stream()
                 .map(link -> "- " + link)
                 .collect(Collectors.joining("\n"));
