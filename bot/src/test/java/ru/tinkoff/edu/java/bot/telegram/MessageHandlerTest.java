@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.bot.telegram;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,9 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.service.ScrapperWebService;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest(properties="spring.main.lazy-initialization=true")
+@SpringBootTest(properties = "spring.main.lazy-initialization=true")
 @TestPropertySource(locations = "classpath:application.yml")
 class MessageHandlerTest {
     @MockBean
