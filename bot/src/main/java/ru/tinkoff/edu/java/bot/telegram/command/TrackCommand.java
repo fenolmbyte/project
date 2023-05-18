@@ -1,6 +1,8 @@
 package ru.tinkoff.edu.java.bot.telegram.command;
 
 import jakarta.validation.constraints.NotNull;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -10,9 +12,6 @@ import ru.tinkoff.edu.java.bot.exception.LinkIsAlreadyTackingException;
 import ru.tinkoff.edu.java.bot.service.ScrapperWebService;
 import ru.tinkoff.edu.java.parser.data.LinkData;
 import ru.tinkoff.edu.java.parser.handler.LinkHandlerChain;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Order(4)
 @Slf4j
@@ -27,8 +26,8 @@ public class TrackCommand extends AbstractPublicCommand {
     private static final String SUCCESS_RESPONSE = "Ссылка добавлена в список отслеживания";
     private static final String WRONG_FORMAT_RESPONSE = "Используйте правильный формат: '/track <ссылка>'";
     private static final String WRONG_LINK_FORMAT_RESPONSE =
-            "Вы можете использовать только правильные ссылки на " +
-                "GitHub для репозиториев и ссылки на StackOverflow для вопросов";
+            "Вы можете использовать только правильные ссылки на "
+            + "GitHub для репозиториев и ссылки на StackOverflow для вопросов";
     private static final String LINK_IS_ALREADY_TRACKING_RESPONSE = "Вы уже отслеживаете эту ссылку";
 
     public TrackCommand(ScrapperWebService webService, LinkHandlerChain linkHandler) {

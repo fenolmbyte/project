@@ -17,8 +17,8 @@ public class StartCommand implements Command {
 
     private static final String COMMAND = "/start";
     private static final String WELCOME_MESSAGE_RESPONSE =
-        "Добро пожаловать в LinkTrackerBot! " +
-        "\nИспользуйте команду /help, чтобы ознакомиться со списком доступных комманд";
+        "Добро пожаловать в LinkTrackerBot! "
+        + "\nИспользуйте команду /help, чтобы ознакомиться со списком доступных комманд";
     private static final String CHAT_ALREADY_REGISTERED_RESPONSE =
             "Бот уже начал свою работу, нет необходимости использовать эту команду снова";
 

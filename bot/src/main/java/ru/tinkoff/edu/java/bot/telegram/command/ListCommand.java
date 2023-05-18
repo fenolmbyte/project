@@ -1,7 +1,9 @@
 package ru.tinkoff.edu.java.bot.telegram.command;
 
 import jakarta.validation.constraints.NotNull;
-import lombok.RequiredArgsConstructor;
+import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,10 +11,6 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import ru.tinkoff.edu.java.bot.dto.scrapper.LinkResponse;
 import ru.tinkoff.edu.java.bot.dto.scrapper.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.service.ScrapperWebService;
-
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Order(2)
 @Component
@@ -22,8 +20,8 @@ public class ListCommand extends AbstractPublicCommand {
     private static final String COMMAND = "/list";
     private static final String DESCRIPTION = "показать список отслеживаемых ссылок";
     private static final String EMPTY_LINKS_LIST_MESSAGE =
-            "У вас еще нет отслеживаемых ссылок. " +
-                "\nИспользуйте /track <ссылка>, чтобы начать отслеживание своей первой ссылки!";
+            "У вас еще нет отслеживаемых ссылок. "
+            + "\nИспользуйте /track <ссылка>, чтобы начать отслеживание своей первой ссылки!";
 
     public ListCommand(ScrapperWebService webService) {
         super(COMMAND, DESCRIPTION);
