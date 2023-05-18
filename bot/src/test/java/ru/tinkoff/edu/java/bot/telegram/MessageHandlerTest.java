@@ -28,7 +28,7 @@ class MessageHandlerTest {
         SendMessage response = messageHandler.handle(createMessage("SomeCommandThadDoesNotExist"));
 
         // then
-        assertEquals(response.getText(), "Unknown command, use /help to get list of commands");
+        assertEquals(response.getText(), "Неизвестная команда, используйте /help, чтобы получить список команд");
     }
 
     private Message createMessage(String text) {

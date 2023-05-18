@@ -37,7 +37,8 @@ class ListCommandTest {
         SendMessage response = listCommand.handle(createListMessage());
 
         // then
-        assertEquals(response.getText(), "You don't have tracked links yet, use /track <link> to track one");
+        assertEquals(response.getText(), "У вас еще нет отслеживаемых ссылок. " +
+            "\nИспользуйте /track <ссылка>, чтобы начать отслеживание своей первой ссылки!");
     }
 
     @Test
