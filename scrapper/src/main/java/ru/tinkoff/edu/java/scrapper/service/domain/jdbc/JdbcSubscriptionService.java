@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service.domain.jdbc;
 
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -11,9 +13,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
-
-import java.net.URI;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
