@@ -1,21 +1,21 @@
 package ru.tinkoff.edu.java.scrapper.service.domain.jpa;
 
+import java.net.URI;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.dto.model.Chat;
 import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
-
-import java.net.URI;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 
 @SpringBootTest
 class JpaSubscriptionServiceTest extends IntegrationEnvironment {
@@ -75,8 +75,10 @@ class JpaSubscriptionServiceTest extends IntegrationEnvironment {
         // when
 
         // then
-        assertThrows(IllegalArgumentException.class,
-                () -> subscriptionService.subscribe(chatId, URI.create(url)));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> subscriptionService.subscribe(chatId, URI.create(url))
+        );
     }
 
     @Test
@@ -94,8 +96,10 @@ class JpaSubscriptionServiceTest extends IntegrationEnvironment {
         // when
 
         // then
-        assertThrows(IllegalArgumentException.class,
-                () -> subscriptionService.subscribe(chatId, URI.create(url)));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> subscriptionService.subscribe(chatId, URI.create(url))
+        );
     }
 
     @Test
@@ -112,8 +116,10 @@ class JpaSubscriptionServiceTest extends IntegrationEnvironment {
         // when
 
         // then
-        assertThrows(IllegalArgumentException.class,
-                () -> subscriptionService.unsubscribe(chatId, URI.create(url)));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> subscriptionService.unsubscribe(chatId, URI.create(url))
+        );
     }
 
     @Test
@@ -130,8 +136,10 @@ class JpaSubscriptionServiceTest extends IntegrationEnvironment {
         // when
 
         // then
-        assertThrows(IllegalArgumentException.class,
-                () -> subscriptionService.unsubscribe(chatId, URI.create(url)));
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> subscriptionService.unsubscribe(chatId, URI.create(url))
+        );
     }
 
     @Test
