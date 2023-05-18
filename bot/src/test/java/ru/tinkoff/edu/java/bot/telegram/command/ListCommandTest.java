@@ -51,7 +51,7 @@ class ListCommandTest {
         SendMessage response = listCommand.handle(createListMessage());
 
         // then
-        assertTrue(response.getText().startsWith("List of your current tracked links:"));
+        assertTrue(response.getText().startsWith("Список ссылок, которые вы отслеживате:"));
         assertEquals(response.getText().split("\r\n|\r|\n").length, size + 1);
     }
 
