@@ -15,9 +15,9 @@ public class MessageHandler {
 
     public SendMessage handle(Message message) {
         return commands.stream()
-                .filter(command -> command.supports(message))
-                .map(command -> command.handle(message))
-                .findFirst()
-                .get();
+            .filter(command -> command.supports(message))
+            .map(command -> command.handle(message))
+            .findFirst()
+            .get();
     }
 }
