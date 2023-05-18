@@ -7,8 +7,8 @@ import org.springframework.web.service.annotation.PostExchange;
 import ru.tinkoff.edu.java.scrapper.dto.bot.LinkUpdateRequest;
 
 @HttpExchange(
-        accept = MediaType.APPLICATION_JSON_VALUE,
-        contentType = MediaType.APPLICATION_JSON_VALUE
+    accept = MediaType.APPLICATION_JSON_VALUE,
+    contentType = MediaType.APPLICATION_JSON_VALUE
 )
 public interface BotWebClient {
     @PostExchange("/updates")

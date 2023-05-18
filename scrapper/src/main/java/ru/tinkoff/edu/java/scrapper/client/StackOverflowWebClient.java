@@ -7,10 +7,9 @@ import org.springframework.web.service.annotation.HttpExchange;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.scrapper.dto.client.StackOverflowQuestionsResponse;
 
-
 @HttpExchange(
-        accept = MediaType.APPLICATION_JSON_VALUE,
-        contentType = MediaType.APPLICATION_JSON_VALUE
+    accept = MediaType.APPLICATION_JSON_VALUE,
+    contentType = MediaType.APPLICATION_JSON_VALUE
 )
 public interface StackOverflowWebClient {
     @GetExchange("/questions/{id}?site=stackoverflow")
