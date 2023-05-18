@@ -23,22 +23,22 @@ public class JpaAccessConfig {
 
     @Bean
     public ChatService chatService(
-            JpaLinkRepository linkRepository,
-            JpaChatRepository chatRepository
+        JpaLinkRepository linkRepository,
+        JpaChatRepository chatRepository
     ) {
         return new JpaChatService(chatRepository, linkRepository);
     }
 
     @Bean
     public SubscriptionService subscriptionService(
-            JpaLinkRepository linkRepository,
-            JpaChatRepository chatRepository,
-            JpaSubscriptionRepository subscriptionRepository
+        JpaLinkRepository linkRepository,
+        JpaChatRepository chatRepository,
+        JpaSubscriptionRepository subscriptionRepository
     ) {
         return new JpaSubscriptionService(
-                subscriptionRepository,
-                linkRepository,
-                chatRepository
+            subscriptionRepository,
+            linkRepository,
+            chatRepository
         );
     }
 }
