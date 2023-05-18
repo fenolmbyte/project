@@ -18,8 +18,8 @@ public class UpdatesController {
     private final TrackerBot bot;
 
     @PostMapping(
-            path = "/updates",
-            consumes = MediaType.APPLICATION_JSON_VALUE
+        path = "/updates",
+        consumes = MediaType.APPLICATION_JSON_VALUE
     )
     public void sendUpdates(@RequestBody LinkUpdateRequest request) {
         log.info(request.toString());
