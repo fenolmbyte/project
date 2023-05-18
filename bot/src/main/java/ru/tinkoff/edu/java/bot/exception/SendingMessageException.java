@@ -6,6 +6,6 @@ public class SendingMessageException extends RuntimeException {
     }
 
     public SendingMessageException(Long id, Throwable cause) {
-        this("Error while sending message with chatId=" + id, cause);
+        this("Ошибка при отправке сообщения с chatId=" + id, cause);
     }
 }
