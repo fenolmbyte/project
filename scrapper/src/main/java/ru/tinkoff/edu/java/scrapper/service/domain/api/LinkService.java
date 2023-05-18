@@ -7,5 +7,6 @@ import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 
 public interface LinkService {
     List<Link> updateLastCheckedTimeAndGet(Duration linkToBeCheckedInterval);
+
     void updateLinkLastUpdateTime(Long id, OffsetDateTime newUpdateTime);
 }
