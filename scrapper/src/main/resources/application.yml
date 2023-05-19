@@ -1,3 +1,32 @@
+springdoc:
+  swagger-ui:
+    path: "swagger-ui"
+
+management:
+  server:
+    port: 8092
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include: [ "info", "health", "prometheus" ]
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+      group:
+        readiness.include: db
+        liveness.include: ping
+    prometheus:
+      enabled: true
+  metrics.tags:
+    application: ${spring.application.name}
+
 app:
   scheduler:
     interval: 10000
@@ -14,14 +43,6 @@ app:
     exchange-name: updates
     queue-name: updates.queue
     routing-key: upd
-
-springdoc:
-  swagger-ui:
-    path: "swagger-ui"
-
-management:
-  server:
-    port: 8080
 
 spring:
   application:

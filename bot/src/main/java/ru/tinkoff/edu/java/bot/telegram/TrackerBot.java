@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.bot.telegram;
 
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +24,19 @@ public class TrackerBot extends TelegramLongPollingBot {
     private final ApplicationConfig config;
     private final MessageHandler messageHandler;
     private final List<AbstractPublicCommand> commands;
+    private final Counter messageCounter;
 
-    public TrackerBot(ApplicationConfig config, MessageHandler messageHandler, List<AbstractPublicCommand> commands) {
+    public TrackerBot(
+        ApplicationConfig config,
+        MessageHandler messageHandler,
+        List<AbstractPublicCommand> commands,
+        MeterRegistry meterRegistry
+    ) {
         super(config.getBot().getToken());
         this.messageHandler = messageHandler;
         this.config = config;
         this.commands = commands;
+        this.messageCounter = meterRegistry.counter("received_messages_count");
     }
 
     @PostConstruct
@@ -50,6 +59,7 @@ public class TrackerBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             SendMessage sendMessage;
+            messageCounter.increment();
             try {
                 sendMessage = messageHandler.handle(message);
             } catch (RuntimeException ex) {
