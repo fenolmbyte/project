@@ -1,5 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.service.domain.jooq;
 
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.exception.DataAccessException;
@@ -10,9 +12,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqLinkRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jooq.JooqSubscriptionRepository;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.SubscriptionService;
-
-import java.net.URI;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor

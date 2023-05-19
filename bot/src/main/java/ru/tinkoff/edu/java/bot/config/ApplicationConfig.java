@@ -15,8 +15,8 @@ import ru.tinkoff.edu.java.parser.ParserConfig;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @Configuration
 @Import({
-        TelegramBotStarterConfiguration.class,
-        ParserConfig.class
+    TelegramBotStarterConfiguration.class,
+    ParserConfig.class
 })
 public class ApplicationConfig {
     @NotNull

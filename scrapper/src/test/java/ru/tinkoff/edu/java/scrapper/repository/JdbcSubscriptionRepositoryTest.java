@@ -1,5 +1,9 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
+import java.sql.PreparedStatement;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,12 +18,7 @@ import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.dto.model.Subscription;
 import ru.tinkoff.edu.java.scrapper.repository.jdbc.JdbcSubscriptionRepository;
 
-import java.sql.PreparedStatement;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-@SpringBootTest
+@SpringBootTest(properties = {"app.database-access-type=jdbc"})
 class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     @Autowired
     private JdbcTemplate template;
@@ -173,7 +172,10 @@ class JdbcSubscriptionRepositoryTest extends IntegrationEnvironment {
     }
 
     private List<Subscription> getAll() {
-        return template.query("select chat_id, link_id from subscription", new BeanPropertyRowMapper<>(Subscription.class));
+        return template.query(
+            "select chat_id, link_id from subscription",
+            new BeanPropertyRowMapper<>(Subscription.class)
+        );
     }
 
     private Long createLink(String url) {

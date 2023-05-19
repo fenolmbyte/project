@@ -1,0 +1,48 @@
+on:
+  push:
+    paths:
+      - 'bot/**'
+      - 'link-parser/**'
+      - 'pom.xml'
+      - '.github/workflows/bot.yml'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: bot-app:latest
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build Jar
+        run: mvn package -pl bot -am
+      - name: Build Image
+        run: docker build -t ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }} . -f bot/bot.Dockerfile
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        run: docker push ${{ env.REGISTRY }}/${{ github.actor }}/${{ env.IMAGE_NAME }}
+
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+      - name: Run checker
+        run: mvn -pl bot -am checkstyle:check

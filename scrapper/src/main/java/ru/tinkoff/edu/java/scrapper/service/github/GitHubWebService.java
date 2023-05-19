@@ -1,15 +1,14 @@
 package ru.tinkoff.edu.java.scrapper.service.github;
 
 import jakarta.annotation.Nullable;
+import java.time.OffsetDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.tinkoff.edu.java.scrapper.client.GitHubWebClient;
 import ru.tinkoff.edu.java.scrapper.dto.client.GitHubEventResponse;
 import ru.tinkoff.edu.java.scrapper.dto.client.UpdatesInfo;
-
-import java.time.OffsetDateTime;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -23,10 +22,10 @@ public class GitHubWebService {
         if (!events.isEmpty()) {
             GitHubEventResponse lastEvent = events.get(0);
             List<String> eventsInfo = events
-                    .stream()
-                    .filter(event -> event.getCreatedAt().isAfter(lastUpdateTimeSaved))
-                    .map(event -> getEventTypeDescription(event.getType()) + " at " + event.getCreatedAt())
-                    .toList();
+                .stream()
+                .filter(event -> event.getCreatedAt().isAfter(lastUpdateTimeSaved))
+                .map(event -> getEventTypeDescription(event.getType()) + " at " + event.getCreatedAt())
+                .toList();
             return new UpdatesInfo(lastEvent.getCreatedAt(), eventsInfo);
         }
         return null;

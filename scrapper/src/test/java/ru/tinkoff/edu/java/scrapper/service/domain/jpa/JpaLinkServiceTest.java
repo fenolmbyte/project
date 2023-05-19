@@ -1,5 +1,11 @@
 package ru.tinkoff.edu.java.scrapper.service.domain.jpa;
 
+import java.time.Duration;
+import java.time.OffsetDateTime;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,12 +15,6 @@ import ru.tinkoff.edu.java.scrapper.IntegrationEnvironment;
 import ru.tinkoff.edu.java.scrapper.dto.model.Link;
 import ru.tinkoff.edu.java.scrapper.exception.InternalError;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.LinkService;
-
-import java.time.Duration;
-import java.time.OffsetDateTime;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class JpaLinkServiceTest extends IntegrationEnvironment {
@@ -71,9 +71,9 @@ class JpaLinkServiceTest extends IntegrationEnvironment {
         // when
 
         // then
-         linkService.updateLinkLastUpdateTime(id, newUpdateTime);
-         Link updatedLink = helper.getLinkById(id);
-         assertEquals(newUpdateTime.toEpochSecond(), updatedLink.getLastUpdateTime().toEpochSecond());
+        linkService.updateLinkLastUpdateTime(id, newUpdateTime);
+        Link updatedLink = helper.getLinkById(id);
+        assertEquals(newUpdateTime.toEpochSecond(), updatedLink.getLastUpdateTime().toEpochSecond());
     }
 
     @Test

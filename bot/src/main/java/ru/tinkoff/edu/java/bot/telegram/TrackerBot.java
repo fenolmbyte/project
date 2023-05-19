@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.bot.telegram;
 
 import jakarta.annotation.PostConstruct;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -14,8 +15,6 @@ import ru.tinkoff.edu.java.bot.config.ApplicationConfig;
 import ru.tinkoff.edu.java.bot.dto.controller.LinkUpdateRequest;
 import ru.tinkoff.edu.java.bot.exception.SendingMessageException;
 import ru.tinkoff.edu.java.bot.telegram.command.AbstractPublicCommand;
-
-import java.util.List;
 
 @Slf4j
 @Component
@@ -34,15 +33,15 @@ public class TrackerBot extends TelegramLongPollingBot {
     @PostConstruct
     private void init() {
         List<BotCommand> botCommands = commands
-                .stream()
-                .map(AbstractPublicCommand::toBotCommand)
-                .toList();
+            .stream()
+            .map(AbstractPublicCommand::toBotCommand)
+            .toList();
         SetMyCommands setMyCommands = new SetMyCommands();
         setMyCommands.setCommands(botCommands);
         try {
             this.execute(setMyCommands);
         } catch (TelegramApiException e) {
-            log.error("Failed to set commands due to error: {}", e.getMessage());
+            log.error("Не удалось задать команды из-за ошибки: {}", e.getMessage());
         }
     }
 
@@ -55,13 +54,15 @@ public class TrackerBot extends TelegramLongPollingBot {
                 sendMessage = messageHandler.handle(message);
             } catch (RuntimeException ex) {
                 log.error(ex.toString());
-                sendMessage = new SendMessage(message.getChatId().toString(),
-                        "Sorry, internal error happened");
+                sendMessage = new SendMessage(
+                    message.getChatId().toString(),
+                    "Произошла внутренная ошибка"
+                );
             }
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
-                log.error("Failed to send message due to error: {}", e.getMessage());
+                log.error("Не удалось отправить сообщение из-за ошибки: {}", e.getMessage());
             }
         }
     }
@@ -72,16 +73,16 @@ public class TrackerBot extends TelegramLongPollingBot {
     }
 
     public void sendUpdates(LinkUpdateRequest updates) {
-        String message = "New updates from: " + updates.url() + "\n" + updates.description();
+        String message = "Новые обновления: " + updates.url() + "\n" + updates.description();
         updates.tgChatsIds().forEach(id -> sendMessage(id, message));
     }
 
     private void sendMessage(Long chatId, String text) {
         try {
             SendMessage sendMessage = SendMessage.builder()
-                    .chatId(chatId)
-                    .text(text)
-                    .build();
+                .chatId(chatId)
+                .text(text)
+                .build();
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
             throw new SendingMessageException(chatId, e);

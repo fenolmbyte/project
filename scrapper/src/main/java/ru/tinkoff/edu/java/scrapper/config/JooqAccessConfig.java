@@ -34,29 +34,29 @@ public class JooqAccessConfig {
 
     @Bean
     public LinkService linkService(
-            JooqLinkRepository linkRepository
+        JooqLinkRepository linkRepository
     ) {
         return new JooqLinkService(linkRepository);
     }
 
     @Bean
     public ChatService chatService(
-            JooqLinkRepository linkRepository,
-            JooqChatRepository chatRepository
+        JooqLinkRepository linkRepository,
+        JooqChatRepository chatRepository
     ) {
         return new JooqChatService(linkRepository, chatRepository);
     }
 
     @Bean
     public SubscriptionService subscriptionService(
-            JooqLinkRepository linkRepository,
-            JooqChatRepository chatRepository,
-            JooqSubscriptionRepository subscriptionRepository
+        JooqLinkRepository linkRepository,
+        JooqChatRepository chatRepository,
+        JooqSubscriptionRepository subscriptionRepository
     ) {
         return new JooqSubscriptionService(
-                linkRepository,
-                chatRepository,
-                subscriptionRepository
+            linkRepository,
+            chatRepository,
+            subscriptionRepository
         );
     }
 }

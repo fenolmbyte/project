@@ -39,22 +39,22 @@ public class JdbcAccessConfig {
 
     @Bean
     public ChatService chatService(
-            JdbcLinkRepository linkRepository,
-            JdbcChatRepository chatRepository
+        JdbcLinkRepository linkRepository,
+        JdbcChatRepository chatRepository
     ) {
         return new JdbcChatService(chatRepository, linkRepository);
     }
 
     @Bean
     public SubscriptionService subscriptionService(
-            JdbcLinkRepository linkRepository,
-            JdbcChatRepository chatRepository,
-            JdbcSubscriptionRepository subscriptionRepository
+        JdbcLinkRepository linkRepository,
+        JdbcChatRepository chatRepository,
+        JdbcSubscriptionRepository subscriptionRepository
     ) {
         return new JdbcSubscriptionService(
-                subscriptionRepository,
-                linkRepository,
-                chatRepository
+            subscriptionRepository,
+            linkRepository,
+            chatRepository
         );
     }
 }

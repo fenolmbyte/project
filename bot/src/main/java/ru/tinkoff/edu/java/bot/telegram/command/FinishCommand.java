@@ -14,7 +14,7 @@ public class FinishCommand implements Command {
     private final ScrapperWebService webService;
 
     private static final String COMMAND = "/finish";
-    private static final String BYE_MESSAGE = "Bye!";
+    private static final String BYE_MESSAGE = "Бот остановил свою работу. Ждём вас снова!!";
 
     @Override
     public SendMessage handle(Message message) {

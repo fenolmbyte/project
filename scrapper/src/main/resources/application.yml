@@ -1,11 +1,3 @@
-springdoc:
-  swagger-ui:
-    path: "swagger-ui"
-
-management:
-  server:
-    port: 8080
-
 app:
   scheduler:
     interval: 10000
@@ -23,13 +15,23 @@ app:
     queue-name: updates.queue
     routing-key: upd
 
+springdoc:
+  swagger-ui:
+    path: "swagger-ui"
+
+management:
+  server:
+    port: 8080
+
 spring:
+  application:
+    name: "scrapper"
   datasource:
-    url: ${DB_URL}
-    password: ${DB_PASSWORD}
-    username: ${DB_USERNAME}
+    url: jdbc:postgresql://localhost:5432/scrapper
+    password: password
+    username: postgres
   rabbitmq:
     host: localhost
     port: 5672
-    username: ${QUEUE_USERNAME}
-    password: ${QUEUE_PASSWORD}
+    username: user
+    password: pass

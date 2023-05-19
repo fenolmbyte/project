@@ -8,7 +8,6 @@ import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaChatRepository;
 import ru.tinkoff.edu.java.scrapper.repository.jpa.JpaLinkRepository;
 import ru.tinkoff.edu.java.scrapper.service.domain.api.ChatService;
 
-
 @Slf4j
 @RequiredArgsConstructor
 public class JpaChatService implements ChatService {

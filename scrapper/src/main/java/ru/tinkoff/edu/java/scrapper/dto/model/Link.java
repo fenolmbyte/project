@@ -1,11 +1,10 @@
 package ru.tinkoff.edu.java.scrapper.dto.model;
 
+import java.time.OffsetDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.tinkoff.edu.java.scrapper.dto.entity.LinkEntity;
-
-import java.time.OffsetDateTime;
 
 @Data
 @NoArgsConstructor

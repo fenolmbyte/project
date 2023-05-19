@@ -13,8 +13,8 @@ import ru.tinkoff.edu.java.bot.dto.scrapper.ListLinksResponse;
 import ru.tinkoff.edu.java.bot.dto.scrapper.RemoveLinkRequest;
 
 @HttpExchange(
-        accept = MediaType.APPLICATION_JSON_VALUE,
-        contentType = MediaType.APPLICATION_JSON_VALUE
+    accept = MediaType.APPLICATION_JSON_VALUE,
+    contentType = MediaType.APPLICATION_JSON_VALUE
 )
 public interface ScrapperWebClient {
     @PostExchange("/tg-chat/{id}")
@@ -24,13 +24,17 @@ public interface ScrapperWebClient {
     void deleteChat(@PathVariable("id") Long id);
 
     @PostExchange("/links/{id}")
-    LinkResponse createLink(@PathVariable("id") Long id,
-                            @RequestBody AddLinkRequest request);
+    LinkResponse createLink(
+        @PathVariable("id") Long id,
+        @RequestBody AddLinkRequest request
+    );
 
     @GetExchange("/links/{id}")
     ListLinksResponse getAllLinks(@PathVariable("id") Long id);
 
     @DeleteExchange("/links/{id}")
-    LinkResponse deleteLink(@PathVariable("id") Long id,
-                            @RequestBody RemoveLinkRequest request);
+    LinkResponse deleteLink(
+        @PathVariable("id") Long id,
+        @RequestBody RemoveLinkRequest request
+    );
 }

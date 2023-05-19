@@ -16,9 +16,11 @@ public class StartCommand implements Command {
     private final ScrapperWebService webService;
 
     private static final String COMMAND = "/start";
-    private static final String WELCOME_MESSAGE_RESPONSE = "Hello!";
+    private static final String WELCOME_MESSAGE_RESPONSE =
+        "Добро пожаловать в LinkTrackerBot! "
+        + "\nИспользуйте команду /help, чтобы ознакомиться со списком доступных комманд";
     private static final String CHAT_ALREADY_REGISTERED_RESPONSE =
-            "You have already started the conversation, no need to use it again";
+            "Бот уже начал свою работу, нет необходимости использовать эту команду снова";
 
     @Override
     public SendMessage handle(@NotNull Message message) {

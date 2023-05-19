@@ -9,7 +9,7 @@ import ru.tinkoff.edu.java.scrapper.service.UpdatesSender;
 
 @Service
 @RequiredArgsConstructor
-@ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "false",  matchIfMissing = true)
+@ConditionalOnProperty(prefix = "app", name = "use-queue", havingValue = "false", matchIfMissing = true)
 public class BotWebService implements UpdatesSender {
     private final BotWebClient webClient;
 

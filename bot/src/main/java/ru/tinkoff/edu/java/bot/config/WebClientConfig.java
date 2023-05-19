@@ -18,15 +18,15 @@ public class WebClientConfig {
 
     public WebClientConfig(ObjectMapper objectMapper) {
         exchangeStrategies = ExchangeStrategies
-                .builder()
-                .codecs(clientDefaultCodecsConfigurer -> {
-                    clientDefaultCodecsConfigurer
-                            .defaultCodecs()
-                            .jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper, MediaType.APPLICATION_JSON));
-                    clientDefaultCodecsConfigurer
-                            .defaultCodecs()
-                            .jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
-                }).build();
+            .builder()
+            .codecs(clientDefaultCodecsConfigurer -> {
+                clientDefaultCodecsConfigurer
+                    .defaultCodecs()
+                    .jackson2JsonEncoder(new Jackson2JsonEncoder(objectMapper, MediaType.APPLICATION_JSON));
+                clientDefaultCodecsConfigurer
+                    .defaultCodecs()
+                    .jackson2JsonDecoder(new Jackson2JsonDecoder(objectMapper, MediaType.APPLICATION_JSON));
+            }).build();
     }
 
     @Bean
@@ -36,12 +36,12 @@ public class WebClientConfig {
 
     private <T> T buildWebClient(String baseUrl, Class<T> client) {
         WebClient webClient = WebClient.builder()
-                .exchangeStrategies(exchangeStrategies)
-                .baseUrl(baseUrl)
-                .build();
+            .exchangeStrategies(exchangeStrategies)
+            .baseUrl(baseUrl)
+            .build();
         HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
-                .builder(WebClientAdapter.forClient(webClient))
-                .build();
+            .builder(WebClientAdapter.forClient(webClient))
+            .build();
         return httpServiceProxyFactory.createClient(client);
     }
 }
