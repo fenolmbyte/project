@@ -4,14 +4,35 @@ springdoc:
 
 management:
   server:
-    port: 8080
+    port: 8091
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /
+      exposure:
+        include: [ "info", "health", "prometheus" ]
+      path-mapping:
+        prometheus: metrics
+  endpoint:
+    info:
+      enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+      group:
+        readiness.include: db
+        liveness.include: ping
+    prometheus:
+      enabled: true
+  metrics.tags:
+    application: ${spring.application.name}
 
 server:
   port: 8083
 
 app:
   bot:
-    name: "tinkoff-bot"
+    name: "LinkHandlerBot"
     token: 6100537283:AAEW5JLiyRQ3_2CXp12Yzv4LcIujjLWC-ys
   scrapper:
     url: "http://localhost:8080"
@@ -21,8 +42,10 @@ app:
     routing-key: upd
 
 spring:
+  application:
+    name: "bot"
   rabbitmq:
     host: localhost
     port: 5672
-    username: ${QUEUE_USERNAME}
-    password: ${QUEUE_PASSWORD}
+    username: user
+    password: pass
